@@ -211,14 +211,14 @@ function NetworkViz({ label = "Strategic tax advisory" }) {
 // ─── SECTION WRAPPER ─────────────────────────────────────────────────────────
 function Section({ id, eyebrow, title, children, dark = false }) {
   return (
-    <section id={id} className={`scroll-mt-24 py-24 ${dark ? "bg-[#051525] text-[#F5F2EC]" : "bg-[#F5F2EC] text-[#0B0E17]"}`}>
+    <section id={id} className={`scroll-mt-24 py-16 ${dark ? "bg-[#051525] text-[#F5F2EC]" : "bg-[#F5F2EC] text-[#0B0E17]"}`}>
       <div className="mx-auto max-w-7xl px-6">
-        <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.55 }} className="mb-14">
-          <div className="flex items-center gap-3 mb-5">
-            <div className={`h-px w-8 ${dark ? "bg-[#B8922A]" : "bg-[#B8922A]"}`} />
-            <p className={`text-xs font-semibold uppercase tracking-[0.38em] ${dark ? "text-[#B8922A]" : "text-[#8B6A1C]"}`}>{eyebrow}</p>
+        <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.55 }} className="mb-10">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="h-px w-6 bg-[#B8922A]" />
+            <p className={`text-[0.6rem] font-semibold uppercase tracking-[0.38em] ${dark ? "text-[#B8922A]" : "text-[#8B6A1C]"}`}>{eyebrow}</p>
           </div>
-          <h2 className="max-w-5xl text-4xl font-semibold tracking-tight leading-tight md:text-[3.25rem]">{title}</h2>
+          <h2 className="max-w-4xl text-xl font-semibold tracking-tight leading-snug md:text-2xl">{title}</h2>
         </motion.div>
         {children}
       </div>
@@ -233,9 +233,9 @@ function Stat({ label, value, detail, icon: Icon }) {
       <div className="absolute top-0 right-0 w-24 h-24 opacity-[0.04]">
         {Icon && <Icon className="w-full h-full text-[#B8922A]" />}
       </div>
-      <div className="text-[2.6rem] font-semibold tracking-tight text-[#0B0E17] leading-none">{value}</div>
-      <div className="mt-3 text-[0.65rem] font-semibold uppercase tracking-[0.32em] text-[#B8922A]">{label}</div>
-      <div className="mt-5 text-[0.95rem] leading-[1.75] text-[#596070]">{detail}</div>
+      <div className="text-xl font-semibold tracking-tight text-[#0B0E17] leading-snug">{value}</div>
+      <div className="mt-2.5 text-[0.6rem] font-semibold uppercase tracking-[0.32em] text-[#B8922A]">{label}</div>
+      <div className="mt-4 text-sm leading-[1.75] text-[#596070]">{detail}</div>
     </div>
   );
 }
@@ -280,7 +280,7 @@ function Presentation() {
                 <Icon className="h-4 w-4 text-[#B8922A]" />
                 <span className="text-xs font-medium uppercase tracking-[0.22em] text-[#8A9AB0]">{slide.eyebrow}</span>
               </div>
-              <h4 className="text-3xl font-semibold leading-tight text-[#F5F2EC] md:text-[2.6rem]">{slide.title}</h4>
+              <h4 className="text-xl font-semibold leading-snug text-[#F5F2EC] md:text-2xl">{slide.title}</h4>
               <p className="mt-6 text-base leading-8 text-[#8A9AB0] max-w-xl">{slide.body}</p>
             </div>
 
@@ -377,7 +377,7 @@ function RegionMap() {
         <AnimatePresence mode="wait">
           <motion.div key={active.id} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
             <p className="text-[0.62rem] font-semibold uppercase tracking-[0.38em] text-[#B8922A]">Selected Region</p>
-            <h3 className="mt-4 text-3xl font-semibold text-[#F5F2EC] leading-tight">{active.name}</h3>
+            <h3 className="mt-3 text-xl font-semibold text-[#F5F2EC] leading-tight">{active.name}</h3>
 
             <div className="mt-7 space-y-3">
               <div className="border-l-[3px] border-[#B8922A] bg-[#051525] p-5">
@@ -507,17 +507,17 @@ export default function TpgTadTabEnterpriseSite() {
           {/* Subtle rule line background */}
           <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "repeating-linear-gradient(0deg, #0B0E17 0px, #0B0E17 1px, transparent 1px, transparent 40px)" }} />
 
-          <div className="relative mx-auto grid max-w-7xl gap-0 px-6 py-16 lg:grid-cols-2 lg:items-stretch lg:py-24">
+          <div className="relative mx-auto grid max-w-7xl gap-0 px-6 py-10 lg:grid-cols-2 lg:items-stretch lg:py-16">
             <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
               className="flex flex-col justify-center border border-[#DDD7CB] lg:border-r-0 bg-[#FEFCF8] p-8 md:p-12 lg:p-14">
               <div className="mb-8 flex items-center gap-3">
                 <div className="h-px w-8 bg-[#B8922A]" />
                 <span className="text-[0.62rem] font-semibold uppercase tracking-[0.38em] text-[#8B6A1C]">Enterprise Tax Advisory Division · National Branch Network</span>
               </div>
-              <h1 className="text-[2.8rem] font-semibold tracking-tight text-[#0B0E17] leading-[1.1] md:text-[4rem]">
+              <h1 className="text-2xl font-semibold tracking-tight text-[#0B0E17] leading-[1.15] sm:text-[1.75rem] lg:text-[2.25rem]">
                 Strategic tax, treasury, and advisory infrastructure for TPG Worldwide.
               </h1>
-              <p className="mt-8 max-w-2xl text-lg leading-8 text-[#596070]">
+              <p className="mt-6 max-w-2xl text-sm leading-7 text-[#596070] md:text-base md:leading-8">
                 TAD/TAB is a national tax, bookkeeping, treasury, real estate finance, and enterprise advisory platform built to support TPG ecosystem participants from consumer onboarding to institutional real estate, REIT, hybrid treasury, and structured finance execution.
               </p>
 
@@ -531,11 +531,11 @@ export default function TpgTadTabEnterpriseSite() {
               </div>
 
               {/* Micro-stats */}
-              <div className="mt-10 grid grid-cols-3 gap-6 border-t border-[#DDD7CB] pt-8">
+              <div className="mt-8 grid grid-cols-3 gap-4 border-t border-[#DDD7CB] pt-6">
                 {[["5", "Regions"], ["60", "Branches"], ["$1.5M", "Fee Capacity"]].map(([val, lbl]) => (
                   <div key={lbl}>
-                    <div className="text-2xl font-semibold text-[#B8922A]">{val}</div>
-                    <div className="text-[0.65rem] font-medium uppercase tracking-[0.2em] text-[#8B8070] mt-1">{lbl}</div>
+                    <div className="text-xl font-semibold text-[#B8922A]">{val}</div>
+                    <div className="text-[0.6rem] font-medium uppercase tracking-[0.2em] text-[#8B8070] mt-1">{lbl}</div>
                   </div>
                 ))}
               </div>
@@ -726,7 +726,7 @@ export default function TpgTadTabEnterpriseSite() {
         </Section>
 
         {/* ── CTA ── */}
-        <section id="contact" className="bg-[#051525] py-24 text-[#F5F2EC]">
+        <section id="contact" className="bg-[#051525] py-16 text-[#F5F2EC]">
           <div className="mx-auto max-w-7xl px-6">
             <div className="grid gap-12 lg:grid-cols-[1fr_0.55fr] lg:items-start">
               <div>
@@ -734,18 +734,18 @@ export default function TpgTadTabEnterpriseSite() {
                   <div className="h-px w-8 bg-[#B8922A]" />
                   <p className="text-[0.62rem] font-semibold uppercase tracking-[0.38em] text-[#B8922A]">Branch Recruitment</p>
                 </div>
-                <h2 className="text-3xl font-semibold tracking-tight leading-tight sm:text-[2.8rem] md:text-[3.4rem]">
+                <h2 className="text-2xl font-semibold tracking-tight leading-snug md:text-[1.75rem]">
                   Local advisors can join the national TAB platform.
                 </h2>
                 <p className="mt-7 max-w-2xl text-base leading-8 text-[#8A9AB0]">
                   TAB is built for tax professionals, EAs, CPAs, bookkeepers, payroll operators, real estate finance advisors, and regional consultancies that want to access a national brand, technology stack, AI intake, enterprise systems, and TPG ecosystem client origination.
                 </p>
 
-                <div className="mt-10 grid grid-cols-3 gap-6 border-t border-[#1A3050] pt-8">
+                <div className="mt-8 grid grid-cols-3 gap-4 border-t border-[#1A3050] pt-6">
                   {[["$25K", "Annual Branch Fee"], ["60", "Flagship Branches"], ["5", "National Regions"]].map(([val, lbl]) => (
                     <div key={lbl}>
-                      <div className="text-2xl font-semibold text-[#B8922A]">{val}</div>
-                      <div className="text-[0.62rem] font-medium uppercase tracking-[0.2em] text-[#8A9AB0] mt-1.5">{lbl}</div>
+                      <div className="text-xl font-semibold text-[#B8922A]">{val}</div>
+                      <div className="text-[0.6rem] font-medium uppercase tracking-[0.2em] text-[#8A9AB0] mt-1">{lbl}</div>
                     </div>
                   ))}
                 </div>
