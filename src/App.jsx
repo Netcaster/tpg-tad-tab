@@ -593,9 +593,9 @@ function MobileNav({ theme, toggleTheme, onSecureAccess }) {
 
           <button
             onClick={onSecureAccess}
-            className="hidden lg:inline-flex items-center gap-2 border border-[#B8922A]/40 bg-[#B8922A]/10 px-4 py-2.5 text-sm font-medium text-[#B8922A] hover:bg-[#B8922A]/20 hover:border-[#B8922A] transition-colors"
+            className="hidden lg:inline-flex items-center gap-1.5 border border-[#B8922A]/40 bg-[#B8922A]/10 px-3 py-1.5 text-xs font-medium text-[#B8922A] hover:bg-[#B8922A]/20 hover:border-[#B8922A] transition-colors"
           >
-            <Lock className="h-3.5 w-3.5" /> Secure Access
+            <Lock className="h-3 w-3" /> Secure Access
           </button>
           <a href="#contact" className="hidden lg:inline-flex items-center gap-2 bg-[#051525] px-5 py-2.5 text-sm font-medium text-[#F5F2EC] hover:bg-[#0A1E38] transition-colors">
             Branch Inquiry <ArrowRight className="h-3.5 w-3.5" />
