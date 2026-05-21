@@ -29,6 +29,8 @@ import {
   Briefcase,
   Sun,
   Moon,
+  Lock,
+  X,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -407,6 +409,140 @@ function RegionMap() {
   );
 }
 
+// ─── SECURE ACCESS MODAL ─────────────────────────────────────────────────────
+const ACCESS_CODE = "TAD2026";
+
+function SecureAccessModal({ open, onClose }) {
+  const [value, setValue] = useState("");
+  const [error, setError] = useState(false);
+  const [shake, setShake] = useState(false);
+
+  useEffect(() => {
+    if (open) { setValue(""); setError(false); }
+  }, [open]);
+
+  function check() {
+    if (value.trim() === ACCESS_CODE) {
+      onClose();
+      window.location.href = "https://nalu-enterprise.pages.dev/client-portal.html";
+    } else {
+      setError(true);
+      setShake(true);
+      setValue("");
+      setTimeout(() => { setError(false); setShake(false); }, 3000);
+    }
+  }
+
+  function handleKey(e) {
+    if (e.key === "Enter") check();
+    if (e.key === "Escape") onClose();
+  }
+
+  if (!open) return null;
+
+  return (
+    <div
+      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+      style={{
+        position: "fixed", inset: 0, zIndex: 9999,
+        background: "rgba(3,6,16,0.88)",
+        backdropFilter: "blur(12px)",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        padding: "24px",
+      }}
+    >
+      <div style={{
+        background: "#070F1E",
+        border: `1px solid ${error ? "rgba(239,68,68,0.5)" : "rgba(184,146,42,0.35)"}`,
+        borderRadius: "18px",
+        padding: "44px 40px",
+        width: "100%", maxWidth: "400px",
+        textAlign: "center",
+        boxShadow: "0 32px 100px rgba(0,0,0,0.75)",
+        animation: shake ? "modalShake 0.35s ease" : "modalRise 0.22s ease",
+      }}>
+        <style>{`
+          @keyframes modalRise { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+          @keyframes modalShake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-8px)} 40%{transform:translateX(8px)} 60%{transform:translateX(-6px)} 80%{transform:translateX(6px)} }
+        `}</style>
+
+        <div style={{ fontSize: "36px", marginBottom: "14px" }}>🔐</div>
+        <h2 style={{ fontSize: "22px", fontWeight: 700, color: "#F5F2EC", marginBottom: "6px", letterSpacing: "-0.01em" }}>
+          Secure <span style={{ color: "#B8922A" }}>Access</span>
+        </h2>
+        <p style={{ fontSize: "13px", color: "#8A9AB0", lineHeight: 1.6, marginBottom: "26px" }}>
+          Document administrators only.<br />Enter your access code to continue.
+        </p>
+
+        {error && (
+          <div style={{
+            background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.3)",
+            color: "#fca5a5", borderRadius: "7px", padding: "9px 14px",
+            fontSize: "12px", marginBottom: "12px",
+          }}>
+            Incorrect code. Please try again.
+          </div>
+        )}
+
+        <input
+          autoFocus
+          type="password"
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          onKeyDown={handleKey}
+          placeholder="Access code"
+          style={{
+            width: "100%",
+            background: "rgba(184,146,42,0.06)",
+            border: `1px solid ${error ? "rgba(239,68,68,0.5)" : "rgba(184,146,42,0.3)"}`,
+            borderRadius: "8px",
+            padding: "13px 16px",
+            fontSize: "16px", color: "#F5F2EC",
+            textAlign: "center", letterSpacing: "0.14em",
+            outline: "none", marginBottom: "12px",
+            fontFamily: "Inter, monospace",
+            transition: "border-color 0.2s",
+          }}
+          onFocus={(e) => { e.target.style.borderColor = "#B8922A"; e.target.style.background = "rgba(184,146,42,0.1)"; }}
+          onBlur={(e) => { e.target.style.borderColor = error ? "rgba(239,68,68,0.5)" : "rgba(184,146,42,0.3)"; e.target.style.background = "rgba(184,146,42,0.06)"; }}
+        />
+
+        <button
+          onClick={check}
+          style={{
+            width: "100%",
+            background: "linear-gradient(135deg, #B8922A, #9A7A20)",
+            color: "#051525", border: "none",
+            padding: "13px", borderRadius: "8px",
+            fontSize: "14px", fontWeight: 700,
+            cursor: "pointer", marginBottom: "10px",
+            fontFamily: "Inter, sans-serif", letterSpacing: "0.02em",
+            transition: "opacity 0.2s",
+          }}
+          onMouseEnter={(e) => { e.target.style.opacity = "0.88"; }}
+          onMouseLeave={(e) => { e.target.style.opacity = "1"; }}
+        >
+          Continue →
+        </button>
+
+        <button
+          onClick={onClose}
+          style={{
+            background: "none", border: "none",
+            color: "#8A9AB0", fontSize: "13px",
+            cursor: "pointer", fontFamily: "Inter, sans-serif",
+            transition: "color 0.2s",
+          }}
+          onMouseEnter={(e) => { e.target.style.color = "rgba(255,255,255,0.6)"; }}
+          onMouseLeave={(e) => { e.target.style.color = "#8A9AB0"; }}
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  );
+}
+
 // ─── THEME ───────────────────────────────────────────────────────────────────
 function useTheme() {
   const [theme, setTheme] = useState(() => localStorage.getItem("theme") || "light");
@@ -423,7 +559,7 @@ function useTheme() {
 // ─── MOBILE NAV ─────────────────────────────────────────────────────────────
 const NAV_LINKS = [["#model", "Model"], ["#services", "Services"], ["#ecosystem", "Ecosystem"], ["#regions", "5 Regions"], ["#deck", "Web Deck"], ["#proforma", "Pro Forma"]];
 
-function MobileNav({ theme, toggleTheme }) {
+function MobileNav({ theme, toggleTheme, onSecureAccess }) {
   const [open, setOpen] = useState(false);
   return (
     <header className="sticky top-0 z-50 border-b border-[#DDD7CB] bg-[#F5F2EC]/96 backdrop-blur-xl">
@@ -455,6 +591,12 @@ function MobileNav({ theme, toggleTheme }) {
             {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </button>
 
+          <button
+            onClick={onSecureAccess}
+            className="hidden lg:inline-flex items-center gap-2 border border-[#B8922A]/40 bg-[#B8922A]/10 px-4 py-2.5 text-sm font-medium text-[#B8922A] hover:bg-[#B8922A]/20 hover:border-[#B8922A] transition-colors"
+          >
+            <Lock className="h-3.5 w-3.5" /> Secure Access
+          </button>
           <a href="#contact" className="hidden lg:inline-flex items-center gap-2 bg-[#051525] px-5 py-2.5 text-sm font-medium text-[#F5F2EC] hover:bg-[#0A1E38] transition-colors">
             Branch Inquiry <ArrowRight className="h-3.5 w-3.5" />
           </a>
@@ -480,8 +622,13 @@ function MobileNav({ theme, toggleTheme }) {
                 {label}
               </a>
             ))}
+            <button
+              onClick={() => { setOpen(false); onSecureAccess(); }}
+              className="mt-2 w-full inline-flex items-center justify-center gap-2 border border-[#B8922A]/40 bg-[#B8922A]/10 py-3 text-sm font-medium text-[#B8922A]">
+              <Lock className="h-3.5 w-3.5" /> Secure Access
+            </button>
             <a href="#contact" onClick={() => setOpen(false)}
-              className="mt-3 inline-flex items-center justify-center gap-2 bg-[#051525] py-3 text-sm font-medium text-[#F5F2EC]">
+              className="mt-2 inline-flex items-center justify-center gap-2 bg-[#051525] py-3 text-sm font-medium text-[#F5F2EC]">
               Branch Inquiry <ArrowRight className="h-3.5 w-3.5" />
             </a>
           </nav>
@@ -494,12 +641,15 @@ function MobileNav({ theme, toggleTheme }) {
 // ─── MAIN COMPONENT ──────────────────────────────────────────────────────────
 export default function TpgTadTabEnterpriseSite() {
   const { theme, toggle } = useTheme();
+  const [secureOpen, setSecureOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-[#F5F2EC] text-[#0B0E17] font-sans">
 
+      <SecureAccessModal open={secureOpen} onClose={() => setSecureOpen(false)} />
+
       {/* ── NAV ── */}
-      <MobileNav theme={theme} toggleTheme={toggle} />
+      <MobileNav theme={theme} toggleTheme={toggle} onSecureAccess={() => setSecureOpen(true)} />
 
       <main id="top">
         {/* ── HERO ── */}
