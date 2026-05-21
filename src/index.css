@@ -2,13 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
@@ -16,4 +12,48 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: #F5F2EC;
+  transition: background-color 0.25s ease;
 }
+
+/* ── DAY / NIGHT THEME OVERRIDES ──────────────────────────────────────────── */
+
+/* Body background */
+html[data-theme="dark"] body { background: #060D1A; }
+
+/* Light section / page backgrounds → deep navy */
+[data-theme="dark"] .bg-\[\#F5F2EC\]  { background-color: #060D1A !important; }
+[data-theme="dark"] .bg-\[\#FEFCF8\]  { background-color: #0A1828 !important; }
+[data-theme="dark"] .bg-white          { background-color: #0F2545 !important; }
+[data-theme="dark"] .bg-\[\#EDE8DF\]  { background-color: #0F2545 !important; }
+[data-theme="dark"] .bg-\[\#F0E8D5\]  { background-color: #0F2545 !important; }
+[data-theme="dark"] .bg-\[\#DDD7CB\]  { background-color: #1A3050 !important; }
+[data-theme="dark"] .bg-\[\#EFECE5\]  { background-color: #0A1828 !important; }
+
+/* Header / nav */
+[data-theme="dark"] header             { background-color: rgba(6, 13, 26, 0.96) !important; }
+[data-theme="dark"] header .border-\[\#DDD7CB\] { border-color: #1A3050 !important; }
+
+/* Primary text */
+[data-theme="dark"] .text-\[\#0B0E17\] { color: #F0EDE6 !important; }
+[data-theme="dark"] .text-\[\#596070\] { color: #8A9AB0 !important; }
+[data-theme="dark"] .text-\[\#8B6A1C\] { color: #B8922A !important; }
+[data-theme="dark"] .text-\[\#8B8070\] { color: #8A9AB0 !important; }
+[data-theme="dark"] .text-\[\#50483f\] { color: #8A9AB0 !important; }
+[data-theme="dark"] .text-\[\#40372f\] { color: #8A9AB0 !important; }
+[data-theme="dark"] .text-\[\#404550\] { color: #C8D0DC !important; }
+
+/* Borders */
+[data-theme="dark"] .border-\[\#DDD7CB\] { border-color: #1A3050 !important; }
+[data-theme="dark"] .border-\[\#EDE8DF\]  { border-color: #1A3050 !important; }
+
+/* Hover override — outline button */
+[data-theme="dark"] .hover\:bg-\[\#F0E8D5\]:hover { background-color: #0F2545 !important; }
+
+/* Mobile dropdown */
+[data-theme="dark"] .border-t.border-\[\#DDD7CB\] { border-color: #1A3050 !important; }
+
+/* Smooth transitions on key elements */
+[data-theme="dark"] section,
+[data-theme="dark"] header,
+[data-theme="dark"] footer,
+[data-theme="dark"] div { transition: background-color 0.25s ease, border-color 0.2s ease, color 0.2s ease; }

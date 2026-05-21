@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
@@ -27,6 +27,8 @@ import {
   BarChart3,
   Scale,
   Briefcase,
+  Sun,
+  Moon,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -405,10 +407,23 @@ function RegionMap() {
   );
 }
 
+// ─── THEME ───────────────────────────────────────────────────────────────────
+function useTheme() {
+  const [theme, setTheme] = useState(() => localStorage.getItem("theme") || "light");
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggle = () => setTheme((t) => (t === "light" ? "dark" : "light"));
+  return { theme, toggle };
+}
+
 // ─── MOBILE NAV ─────────────────────────────────────────────────────────────
 const NAV_LINKS = [["#model", "Model"], ["#services", "Services"], ["#ecosystem", "Ecosystem"], ["#regions", "5 Regions"], ["#deck", "Web Deck"], ["#proforma", "Pro Forma"]];
 
-function MobileNav() {
+function MobileNav({ theme, toggleTheme }) {
   const [open, setOpen] = useState(false);
   return (
     <header className="sticky top-0 z-50 border-b border-[#DDD7CB] bg-[#F5F2EC]/96 backdrop-blur-xl">
@@ -430,10 +445,20 @@ function MobileNav() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
+          {/* Day/Night toggle */}
+          <button
+            onClick={toggleTheme}
+            aria-label="Toggle day/night mode"
+            className="flex h-10 w-10 items-center justify-center border border-[#DDD7CB] bg-[#FEFCF8] text-[#596070] hover:border-[#B8922A] hover:text-[#B8922A] transition-colors"
+          >
+            {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+          </button>
+
           <a href="#contact" className="hidden lg:inline-flex items-center gap-2 bg-[#051525] px-5 py-2.5 text-sm font-medium text-[#F5F2EC] hover:bg-[#0A1E38] transition-colors">
             Branch Inquiry <ArrowRight className="h-3.5 w-3.5" />
           </a>
+
           {/* Mobile hamburger */}
           <button onClick={() => setOpen((v) => !v)} className="flex lg:hidden h-10 w-10 items-center justify-center border border-[#DDD7CB] bg-[#FEFCF8] text-[#0B0E17]" aria-label="Toggle menu">
             <div className="flex flex-col gap-[5px]">
@@ -468,11 +493,13 @@ function MobileNav() {
 
 // ─── MAIN COMPONENT ──────────────────────────────────────────────────────────
 export default function TpgTadTabEnterpriseSite() {
+  const { theme, toggle } = useTheme();
+
   return (
     <div className="min-h-screen bg-[#F5F2EC] text-[#0B0E17] font-sans">
 
       {/* ── NAV ── */}
-      <MobileNav />
+      <MobileNav theme={theme} toggleTheme={toggle} />
 
       <main id="top">
         {/* ── HERO ── */}
