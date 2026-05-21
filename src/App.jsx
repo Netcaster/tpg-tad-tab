@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
@@ -272,7 +272,7 @@ function Presentation() {
         {/* Slide content */}
         <AnimatePresence mode="wait">
           <motion.div key={index} initial={{ opacity: 0, x: 28 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -28 }} transition={{ duration: 0.32 }}
-            className="grid min-h-[480px] gap-10 pt-8 md:grid-cols-[1.1fr_0.9fr] md:items-center">
+            className="grid gap-8 pt-8 md:gap-10 md:grid-cols-[1.1fr_0.9fr] md:items-center">
             <div>
               <div className="mb-6 inline-flex items-center gap-2 border border-[#1A3050] bg-[#051525] px-4 py-2">
                 <Icon className="h-4 w-4 text-[#B8922A]" />
@@ -324,9 +324,33 @@ function RegionMap() {
   return (
     <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
       {/* Region columns */}
-      <div className="border border-[#1A3050] bg-[#0A1E38] p-6">
-        <p className="mb-5 text-[0.62rem] font-semibold uppercase tracking-[0.38em] text-[#B8922A]">Select a region</p>
-        <div className="grid grid-cols-5 gap-2">
+      <div className="border border-[#1A3050] bg-[#0A1E38] p-5 lg:p-6">
+        <p className="mb-4 text-[0.62rem] font-semibold uppercase tracking-[0.38em] text-[#B8922A]">Select a region</p>
+
+        {/* Mobile: vertical list */}
+        <div className="flex flex-col gap-2 lg:hidden">
+          {REGIONS.map((region, i) => (
+            <button key={region.id} onClick={() => setActive(region)}
+              className={`flex items-center justify-between border p-4 text-left transition-all duration-200 ${active.id === region.id ? "border-[#B8922A] bg-[#B8922A] text-[#051525]" : "border-[#1A3050] bg-[#051525] text-[#F5F2EC]"}`}>
+              <div className="flex items-center gap-3">
+                <div className={`flex h-8 w-8 shrink-0 items-center justify-center ${active.id === region.id ? "bg-[#051525]/20" : "bg-[#0A1E38]"}`}>
+                  <Map className="h-3.5 w-3.5" />
+                </div>
+                <div>
+                  <p className={`text-[0.58rem] font-semibold uppercase tracking-[0.2em] ${active.id === region.id ? "text-[#051525]/70" : "text-[#8A9AB0]"}`}>Region {i + 1}</p>
+                  <h3 className="text-sm font-semibold leading-tight">{region.name.replace(`Region ${i + 1}: `, "")}</h3>
+                </div>
+              </div>
+              <div className="text-right shrink-0 ml-4">
+                <div className={`text-2xl font-semibold ${active.id === region.id ? "text-[#051525]" : "text-[#B8922A]"}`}>12</div>
+                <div className={`text-xs ${active.id === region.id ? "text-[#051525]/70" : "text-[#8A9AB0]"}`}>territories</div>
+              </div>
+            </button>
+          ))}
+        </div>
+
+        {/* Desktop: 5-column grid */}
+        <div className="hidden lg:grid grid-cols-5 gap-2">
           {REGIONS.map((region, i) => (
             <button key={region.id} onClick={() => setActive(region)}
               className={`group flex flex-col justify-between border p-4 text-left transition-all duration-200 min-h-[360px] ${active.id === region.id ? "border-[#B8922A] bg-[#B8922A] text-[#051525]" : "border-[#1A3050] bg-[#051525] text-[#F5F2EC] hover:border-[#B8922A]/50"}`}>
@@ -381,35 +405,74 @@ function RegionMap() {
   );
 }
 
+// ─── MOBILE NAV ─────────────────────────────────────────────────────────────
+const NAV_LINKS = [["#model", "Model"], ["#services", "Services"], ["#ecosystem", "Ecosystem"], ["#regions", "5 Regions"], ["#deck", "Web Deck"], ["#proforma", "Pro Forma"]];
+
+function MobileNav() {
+  const [open, setOpen] = useState(false);
+  return (
+    <header className="sticky top-0 z-50 border-b border-[#DDD7CB] bg-[#F5F2EC]/96 backdrop-blur-xl">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+        <a href="#top" className="flex items-center gap-3.5">
+          <div className="flex h-11 w-11 items-center justify-center bg-[#051525]">
+            <Layers3 className="h-5 w-5 text-[#B8922A]" />
+          </div>
+          <div>
+            <div className="text-[0.6rem] font-semibold uppercase tracking-[0.32em] text-[#8B6A1C]">TPG Worldwide</div>
+            <div className="text-sm font-semibold text-[#0B0E17]">TAD / TAB</div>
+          </div>
+        </a>
+
+        {/* Desktop nav */}
+        <nav className="hidden items-center gap-7 text-[0.82rem] font-medium text-[#596070] lg:flex">
+          {NAV_LINKS.map(([href, label]) => (
+            <a key={href} href={href} className="hover:text-[#0B0E17] transition-colors">{label}</a>
+          ))}
+        </nav>
+
+        <div className="flex items-center gap-3">
+          <a href="#contact" className="hidden lg:inline-flex items-center gap-2 bg-[#051525] px-5 py-2.5 text-sm font-medium text-[#F5F2EC] hover:bg-[#0A1E38] transition-colors">
+            Branch Inquiry <ArrowRight className="h-3.5 w-3.5" />
+          </a>
+          {/* Mobile hamburger */}
+          <button onClick={() => setOpen((v) => !v)} className="flex lg:hidden h-10 w-10 items-center justify-center border border-[#DDD7CB] bg-[#FEFCF8] text-[#0B0E17]" aria-label="Toggle menu">
+            <div className="flex flex-col gap-[5px]">
+              <span className={`block h-0.5 w-5 bg-[#0B0E17] transition-all duration-200 ${open ? "translate-y-[7px] rotate-45" : ""}`} />
+              <span className={`block h-0.5 w-5 bg-[#0B0E17] transition-all duration-200 ${open ? "opacity-0" : ""}`} />
+              <span className={`block h-0.5 w-5 bg-[#0B0E17] transition-all duration-200 ${open ? "-translate-y-[7px] -rotate-45" : ""}`} />
+            </div>
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile dropdown */}
+      {open && (
+        <div className="border-t border-[#DDD7CB] bg-[#FEFCF8] px-6 py-4 lg:hidden">
+          <nav className="flex flex-col gap-1">
+            {NAV_LINKS.map(([href, label]) => (
+              <a key={href} href={href} onClick={() => setOpen(false)}
+                className="py-3 text-sm font-medium text-[#596070] border-b border-[#EDE8DF] hover:text-[#0B0E17] transition-colors last:border-0">
+                {label}
+              </a>
+            ))}
+            <a href="#contact" onClick={() => setOpen(false)}
+              className="mt-3 inline-flex items-center justify-center gap-2 bg-[#051525] py-3 text-sm font-medium text-[#F5F2EC]">
+              Branch Inquiry <ArrowRight className="h-3.5 w-3.5" />
+            </a>
+          </nav>
+        </div>
+      )}
+    </header>
+  );
+}
+
 // ─── MAIN COMPONENT ──────────────────────────────────────────────────────────
 export default function TpgTadTabEnterpriseSite() {
   return (
     <div className="min-h-screen bg-[#F5F2EC] text-[#0B0E17] font-sans">
 
       {/* ── NAV ── */}
-      <header className="sticky top-0 z-50 border-b border-[#DDD7CB] bg-[#F5F2EC]/96 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <a href="#top" className="flex items-center gap-3.5">
-            <div className="flex h-11 w-11 items-center justify-center bg-[#051525]">
-              <Layers3 className="h-5 w-5 text-[#B8922A]" />
-            </div>
-            <div>
-              <div className="text-[0.6rem] font-semibold uppercase tracking-[0.32em] text-[#8B6A1C]">TPG Worldwide</div>
-              <div className="text-sm font-semibold text-[#0B0E17]">TAD / TAB</div>
-            </div>
-          </a>
-
-          <nav className="hidden items-center gap-7 text-[0.82rem] font-medium text-[#596070] lg:flex">
-            {[["#model", "Model"], ["#services", "Services"], ["#ecosystem", "Ecosystem"], ["#regions", "5 Regions"], ["#deck", "Web Deck"], ["#proforma", "Pro Forma"]].map(([href, label]) => (
-              <a key={href} href={href} className="hover:text-[#0B0E17] transition-colors">{label}</a>
-            ))}
-          </nav>
-
-          <a href="#contact" className="hidden lg:inline-flex items-center gap-2 bg-[#051525] px-5 py-2.5 text-sm font-medium text-[#F5F2EC] hover:bg-[#0A1E38] transition-colors">
-            Branch Inquiry <ArrowRight className="h-3.5 w-3.5" />
-          </a>
-        </div>
-      </header>
+      <MobileNav />
 
       <main id="top">
         {/* ── HERO ── */}
@@ -419,7 +482,7 @@ export default function TpgTadTabEnterpriseSite() {
 
           <div className="relative mx-auto grid max-w-7xl gap-0 px-6 py-16 lg:grid-cols-2 lg:items-stretch lg:py-24">
             <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
-              className="flex flex-col justify-center border border-r-0 border-[#DDD7CB] bg-[#FEFCF8] p-10 md:p-14">
+              className="flex flex-col justify-center border border-[#DDD7CB] lg:border-r-0 bg-[#FEFCF8] p-8 md:p-12 lg:p-14">
               <div className="mb-8 flex items-center gap-3">
                 <div className="h-px w-8 bg-[#B8922A]" />
                 <span className="text-[0.62rem] font-semibold uppercase tracking-[0.38em] text-[#8B6A1C]">Enterprise Tax Advisory Division · National Branch Network</span>
@@ -536,7 +599,7 @@ export default function TpgTadTabEnterpriseSite() {
 
         {/* ── R.I.S.E. ── */}
         <Section id="rise" eyebrow="Highlight Experience" title="The Equitable phase requires tax, treasury, entity, and real estate governance before scale." dark>
-          <div className="grid gap-4 lg:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {[
               ["Asset Procurement", "TAB supports acquisition diligence, ownership records, depreciation planning, vendor setup, and local accounting controls.", Scale],
               ["Land Banking", "Branch-level advisory supports municipality, developer, SPV, and investor reporting around land positions and project entities.", Map],
@@ -570,14 +633,27 @@ export default function TpgTadTabEnterpriseSite() {
 
         {/* ── PRO FORMA ── */}
         <Section id="proforma" eyebrow="Branch Fee Pro Forma" title="Annual branch fees create the first recurring revenue foundation.">
-          <div className="overflow-hidden border border-[#DDD7CB]">
-            {/* Table header */}
+          {/* Mobile: cards stacked */}
+          <div className="flex flex-col gap-3 md:hidden">
+            {PROFORMA.map((row, i) => (
+              <div key={row.year} className="border border-[#DDD7CB] bg-[#FEFCF8] p-5">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="font-semibold text-[#0B0E17]">{row.year}</span>
+                  <span className="text-xl font-semibold text-[#B8922A]">{row.branches} branches</span>
+                </div>
+                <div className="text-lg font-semibold text-[#0B0E17] mb-2">{row.revenue}</div>
+                <div className="text-sm text-[#596070]">{row.note}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Desktop: table */}
+          <div className="hidden md:block overflow-hidden border border-[#DDD7CB]">
             <div className="grid grid-cols-4 bg-[#051525] px-7 py-4">
               {["Year", "Branches", "Branch Fee Revenue", "Deployment Note"].map((h) => (
                 <div key={h} className="text-[0.6rem] font-semibold uppercase tracking-[0.28em] text-[#8A9AB0]">{h}</div>
               ))}
             </div>
-            {/* Rows */}
             {PROFORMA.map((row, i) => (
               <div key={row.year} className={`grid grid-cols-4 gap-4 border-t border-[#DDD7CB] px-7 py-5 items-center ${i % 2 === 0 ? "bg-[#FEFCF8]" : "bg-[#F5F2EC]"}`}>
                 <div className="font-semibold text-[#0B0E17]">{row.year}</div>
@@ -631,7 +707,7 @@ export default function TpgTadTabEnterpriseSite() {
                   <div className="h-px w-8 bg-[#B8922A]" />
                   <p className="text-[0.62rem] font-semibold uppercase tracking-[0.38em] text-[#B8922A]">Branch Recruitment</p>
                 </div>
-                <h2 className="text-[2.8rem] font-semibold tracking-tight leading-tight md:text-[3.4rem]">
+                <h2 className="text-3xl font-semibold tracking-tight leading-tight sm:text-[2.8rem] md:text-[3.4rem]">
                   Local advisors can join the national TAB platform.
                 </h2>
                 <p className="mt-7 max-w-2xl text-base leading-8 text-[#8A9AB0]">
