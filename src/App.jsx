@@ -122,7 +122,7 @@ function NetworkViz({ label = "Strategic tax advisory" }) {
   return (
     <div className="relative min-h-[520px] overflow-hidden bg-[#051525]">
       {/* Blueprint grid */}
-      <svg className="absolute inset-0 h-full w-full opacity-100" viewBox="0 0 800 520" preserveAspectRatio="xMidYMid slice">
+      <svg className="absolute inset-0 h-full w-full opacity-100" viewBox="0 0 800 520" preserveAspectRatio="xMidYMid meet">
         <defs>
           <pattern id="smallGrid" width="20" height="20" patternUnits="userSpaceOnUse">
             <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(184,146,42,0.07)" strokeWidth="0.5" />
@@ -174,26 +174,26 @@ function NetworkViz({ label = "Strategic tax advisory" }) {
           </g>
         ))}
 
-        {/* Corner data overlays */}
+        {/* Corner data overlays — kept well inside safe zone */}
         <g>
-          <rect x="18" y="16" width="140" height="52" fill="#0A1E38" fillOpacity="0.9" stroke="#B8922A" strokeWidth="0.5" strokeOpacity="0.4" />
-          <text x="28" y="34" fill="#B8922A" fontSize="8" fontFamily="Inter" fontWeight="600" letterSpacing="1.5">BRANCHES ACTIVE</text>
-          <text x="28" y="56" fill="#F5F2EC" fontSize="22" fontFamily="Inter" fontWeight="700">60</text>
+          <rect x="52" y="20" width="130" height="48" fill="#0A1E38" fillOpacity="0.92" stroke="#B8922A" strokeWidth="0.5" strokeOpacity="0.5" />
+          <text x="62" y="36" fill="#B8922A" fontSize="7.5" fontFamily="Inter" fontWeight="600" letterSpacing="1.5">BRANCHES</text>
+          <text x="62" y="56" fill="#F5F2EC" fontSize="20" fontFamily="Inter" fontWeight="700">60</text>
         </g>
         <g>
-          <rect x="642" y="16" width="140" height="52" fill="#0A1E38" fillOpacity="0.9" stroke="#B8922A" strokeWidth="0.5" strokeOpacity="0.4" />
-          <text x="652" y="34" fill="#B8922A" fontSize="8" fontFamily="Inter" fontWeight="600" letterSpacing="1.5">FEE CAPACITY</text>
-          <text x="652" y="56" fill="#F5F2EC" fontSize="22" fontFamily="Inter" fontWeight="700">$1.5M</text>
+          <rect x="618" y="20" width="130" height="48" fill="#0A1E38" fillOpacity="0.92" stroke="#B8922A" strokeWidth="0.5" strokeOpacity="0.5" />
+          <text x="628" y="36" fill="#B8922A" fontSize="7.5" fontFamily="Inter" fontWeight="600" letterSpacing="1.5">FEE CAPACITY</text>
+          <text x="628" y="56" fill="#F5F2EC" fontSize="20" fontFamily="Inter" fontWeight="700">$1.5M</text>
         </g>
         <g>
-          <rect x="18" y="448" width="140" height="52" fill="#0A1E38" fillOpacity="0.9" stroke="#B8922A" strokeWidth="0.5" strokeOpacity="0.4" />
-          <text x="28" y="466" fill="#B8922A" fontSize="8" fontFamily="Inter" fontWeight="600" letterSpacing="1.5">REGIONS</text>
-          <text x="28" y="488" fill="#F5F2EC" fontSize="22" fontFamily="Inter" fontWeight="700">5</text>
+          <rect x="52" y="452" width="130" height="48" fill="#0A1E38" fillOpacity="0.92" stroke="#B8922A" strokeWidth="0.5" strokeOpacity="0.5" />
+          <text x="62" y="468" fill="#B8922A" fontSize="7.5" fontFamily="Inter" fontWeight="600" letterSpacing="1.5">REGIONS</text>
+          <text x="62" y="488" fill="#F5F2EC" fontSize="20" fontFamily="Inter" fontWeight="700">5</text>
         </g>
         <g>
-          <rect x="642" y="448" width="140" height="52" fill="#0A1E38" fillOpacity="0.9" stroke="#B8922A" strokeWidth="0.5" strokeOpacity="0.4" />
-          <text x="652" y="466" fill="#B8922A" fontSize="8" fontFamily="Inter" fontWeight="600" letterSpacing="1.5">TERRITORIES</text>
-          <text x="652" y="488" fill="#F5F2EC" fontSize="22" fontFamily="Inter" fontWeight="700">60</text>
+          <rect x="618" y="452" width="130" height="48" fill="#0A1E38" fillOpacity="0.92" stroke="#B8922A" strokeWidth="0.5" strokeOpacity="0.5" />
+          <text x="628" y="468" fill="#B8922A" fontSize="7.5" fontFamily="Inter" fontWeight="600" letterSpacing="1.5">TERRITORIES</text>
+          <text x="628" y="488" fill="#F5F2EC" fontSize="20" fontFamily="Inter" fontWeight="700">60</text>
         </g>
       </svg>
 
