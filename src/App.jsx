@@ -775,7 +775,7 @@ export default function TpgTadTabEnterpriseSite() {
 
                 <div className="mt-8 border-t border-[#1A3050] pt-6">
                   <div className="text-xs text-[#8A9AB0] mb-4">Annual branch participation fee</div>
-                  <div className="text-4xl font-semibold text-[#B8922A]">$25,000</div>
+                  <div className="text-2xl font-semibold text-[#B8922A]">$25,000</div>
                 </div>
 
                 <button className="mt-7 w-full bg-[#B8922A] py-4 text-sm font-semibold text-[#051525] hover:bg-[#D4AD45] transition-colors">
